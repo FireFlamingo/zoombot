@@ -1,0 +1,150 @@
+import datetime                   #import libraries.
+from selenium import webdriver
+import keyboard
+import time
+import schedule
+import requests
+
+now = datetime.now()
+current_time = now.strftime('%H:%M:%S   %d-%m-%y')
+
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------
+
+Class_1 = ("22:46:40") #class time.
+Class_2 = ("06:35:00") #class time.
+
+
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------
+
+#-----------------------------------------------------------------
+
+Class1_link = ("https://us04web.zoom.us/j/71319087375?pwd=ZmR6NTJsY0VQRFNPYzNQamQxZUdBZz09") #zoom meeting link. 
+
+Class2_link =(" zoom link ") #zoom meeting link.
+Pass = input("enter your pass:")
+
+
+#-----------------------------------------------------------------
+#-----------------------------------------------------------------
+
+date_logs = datetime.datetime.now()      #configure date and time
+
+current_day =(date_logs.strftime("%a"))  #print current day
+print(current_day)
+
+current_time =date_logs.strftime("%H:%M:%S") #print current time
+print(current_time)
+
+#-----------------------------------------------------------------
+
+
+#define functions
+
+def zoomJoin():
+    time.sleep(2)
+    keyboard.press_and_release('tab' , do_press=(True) , do_release=(True))
+    time.sleep(3)
+    keyboard.press_and_release('tab' , do_press=(True) , do_release=(True))
+    time.sleep(3)
+    keyboard.press_and_release('enter' , do_press=(True) , do_release=(True))
+    
+def zoomleave ():
+    time.sleep(0.3)
+    keyboard.press_and_release('Alt+q' , do_press=(True) , do_release=(True))
+    time.sleep(0.5)
+    keyboard.press_and_release('tab' , do_press=(True) , do_release=(True))
+    time.sleep(0.2)
+    keyboard.press_and_release('enter' , do_press=(True) , do_release=(True))
+    
+def chat ():
+    time.sleep(0.3)
+    keyboard.press_and_release('Alt+h' , do_press=(True) , do_release=(True))
+    time.sleep(0.6)
+    keyboard.write('9235 Amogh Toshniwal')
+    time.sleep(0.6)
+    keyboard.press_and_release('Alt+h' , do_press=(True) , do_release=(True))
+    time.sleep(0.6)
+    keyboard.press_and_release('enter' , do_press=(True) , do_release=(True))
+    time.sleep(1)
+      
+def wait ():
+    time.sleep(60) 
+    
+    
+def password ():
+    time.sleep(15)
+    keyboard.write(Pass)
+    time.sleep(5)
+    keyboard.press_and_release('enter' , do_press=(True) , do_release=(True))
+
+
+
+def joinClass1 ():
+    driver=webdriver.Chrome()
+    driver.get(Class1_link)
+    time.sleep(7)
+    
+    #_joins_the_class.   
+    
+    zoomJoin()
+    
+    
+    time.sleep(30)
+    password()
+    wait()
+    driver.quit()
+    chat()
+    time.sleep(2400)
+    
+    zoomleave()
+
+  
+def joinClass2 ():
+    driver=webdriver.Chrome()
+    driver.get(Class2_link)
+    time.sleep(7)
+    
+    #_joins_the_class.
+    
+    zoomJoin()
+ 
+    time.sleep(30)
+    password()
+    wait()
+    driver.quit()
+    chat()
+    time.sleep(2400)
+    
+    zoomleave()
+    
+
+
+#----------------------------------------------------------------------------------
+#monday
+schedule.every().monday.at(Class_1).do(joinClass1)
+schedule.every().monday.at(Class_2).do(joinClass2)
+
+#tuesday
+schedule.every().tuesday.at(Class_1).do(joinClass1)
+schedule.every().tuesday.at(Class_2).do(joinClass2)
+
+#Wednesday
+schedule.every().wednesday.at(Class_1).do(joinClass1)
+schedule.every().wednesday.at(Class_2).do(joinClass2)
+
+#thursday
+schedule.every().thursday.at(Class_1).do(joinClass1)
+schedule.every().thursday.at(Class_2).do(joinClass2)
+
+#friday
+schedule.every().friday.at(Class_1).do(joinClass1)
+schedule.every().friday.at(Class_2).do(joinClass2)
+#----------------------------------------------------------------------------------
+
+#run the program
+
+while True :
+    schedule.run_pending()
+    time.sleep(1) 
